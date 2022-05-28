@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.doctruyen.Adapter.FavouricAdapter
-import com.example.doctruyen.Adapter.TheLatestAdapter
 import com.example.doctruyen.Model.BestSellerData
 import com.example.doctruyen.R
 

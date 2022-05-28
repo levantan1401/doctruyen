@@ -10,12 +10,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.doctruyen.Model.BookDataTest
 import com.example.doctruyen.Model.CategoryData
 import com.example.doctruyen.R
 
-class CategoryAdapter(val context: Context?, val cateData: List<CategoryData>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>(){
+class CategoryAdapter(val context: Context?, val cateData: ArrayList<CategoryData>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>(){
+    var onItemClick:((BookDataTest)->Unit)?=null
 
-    private lateinit var adapter: Adapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryAdapter.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.category_row_item,parent,false)
         return ViewHolder(view)
@@ -66,3 +67,5 @@ class TopPickAdapter(val context: Context?, val cateData: List<CategoryData>) : 
 
     }
 }
+
+

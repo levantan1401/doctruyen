@@ -13,23 +13,15 @@
         android:background="@drawable/shape_toobar02">
 
         <TextView
-            android:id="@+id/titleTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:text="Dashboard Admin"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/subTitleTv"
-            android:layout_width="wrap_content"
+            android:layout_width="158dp"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/nameUser"
+            android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="-94dp"
-            android:layout_marginBottom="2dp"
-            android:layout_toEndOf="@+id/textView8"
+            android:layout_marginStart="27dp"
+            android:layout_marginEnd="-63dp"
+            android:layout_marginBottom="14dp"
             android:text="user@example.com"
             android:textColor="@color/white" />
 
@@ -38,8 +30,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="44dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_logout_white" />
 
@@ -49,9 +43,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="33dp"
-            android:text="HELLO, Name"
+            android:layout_marginStart="26dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="HELLO, Admin"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
 
     </RelativeLayout>

@@ -46,6 +46,7 @@ class CategoryAddActivity : AppCompatActivity() {
         progressDialog.show()
         val timestamp = System.currentTimeMillis()
          val hashMap = HashMap<String,Any>()
+        hashMap["id"]= "$timestamp"
         hashMap["category"]=category
         hashMap["timestamp"] = timestamp
         hashMap["uid"]="${firebaseAuth.uid}"

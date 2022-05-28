@@ -1,5 +1,6 @@
 package com.example.doctruyen.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,17 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.doctruyen.Adapter.BestSellerAdapter
 import com.example.doctruyen.Adapter.TablayoutAdapter
+import com.example.doctruyen.Adapter.TopTrendAdapter
 import com.example.doctruyen.Model.BestSellerData
+import com.example.doctruyen.Model.BookDataTest
 import com.example.doctruyen.R
+import com.example.doctruyen.ReadBook
+import com.example.doctruyen.service.FirebaseService
 import com.google.android.material.tabs.TabLayout
+import com.google.gson.Gson
 
 
 class BestSellerFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var bestSellerRW: RecyclerView
+    private lateinit var bestSellerAdapter: BestSellerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,18 +35,22 @@ class BestSellerFragment : Fragment() {
     }
 
     private fun initRecyclerViewBestSeller(view: View) {
-        val bestSellerRW = view.findViewById<RecyclerView>(R.id.bestseller_recycler)
+        bestSellerRW = view.findViewById<RecyclerView>(R.id.bestseller_recycler)
 
-        val listBestSeller = listOf(
-            BestSellerData(R.drawable.recentimage1,"Trên đường băng","Lê Văn Tấn",14809,"Đây là một cuốn sách rất hay Đây là một cuốn sách rất hayĐây là một cuốn sách rất hay..."),
-            BestSellerData(R.drawable.recentimage2,"Giao tiếp không khó","Horron",14809,"Đây là một cuốn sách rất hay Đây là một cuốn sách rất hay ..."),
-            BestSellerData(R.drawable.recentimage2,"One Piece","Horron",14809,"Đây là một cuốn sách rất hay..."),
-            BestSellerData(R.drawable.recentimage1,"Naruto","Horron",14809,"Đây là một cuốn sách rất hay..."),
-        )
-        val bestSellerAdapter = BestSellerAdapter(context,listBestSeller)
-
-        bestSellerRW.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
-        bestSellerRW.adapter = bestSellerAdapter
+        val firebaseService = FirebaseService()
+        firebaseService.getBookSeller {listBook->
+            bestSellerAdapter = BestSellerAdapter(requireContext(), listBook)
+            bestSellerRW.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,false)
+            bestSellerRW.adapter = bestSellerAdapter
+            bestSellerAdapter.onItemClick={
+                val intent = Intent(requireContext(), ReadBook::class.java)
+                val gson = Gson()
+                val json = gson.toJson(it)
+                val PDF = it.nd
+                intent.putExtra("myBooks",json)
+                intent.putExtra("PDF",PDF)
+                startActivity(intent)
+            }
+        }
     }
-
 }

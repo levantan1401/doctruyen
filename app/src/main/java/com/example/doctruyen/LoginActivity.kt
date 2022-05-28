@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
+import com.example.doctruyen.UserInterface.HomePage
 import com.example.doctruyen.databinding.ActivityLoginBinding
 import com.example.doctruyen.databinding.ActivityRegisterBinding
+import com.example.doctruyen.fragments.HomePageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -103,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
                 var userType = snapshot.child("userType").value
                 if (userType == "user"){
                 //its simple user open user dashboard
-                    startActivity(Intent(this@LoginActivity,DashboardUserActivity::class.java))
+                    startActivity(Intent(this@LoginActivity,HomePage::class.java))
                     finish()
                 } else if ( userType == "admin" ){
     //                its admin open admin dashboard

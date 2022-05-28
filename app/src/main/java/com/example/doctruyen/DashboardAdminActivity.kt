@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.doctruyen.Adapter.AdminCategoryAdapter
 import com.example.doctruyen.databinding.ActivityDashboardAdminBinding
@@ -30,9 +31,6 @@ class DashboardAdminActivity : AppCompatActivity() {
     private lateinit var categoryArrayList: ArrayList<fireBase_Category>
     private lateinit var adapterCategory: AdminCategoryAdapter
 
-
-//    Bien
-    private lateinit var searchEt: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardAdminBinding.inflate(layoutInflater)
@@ -40,66 +38,24 @@ class DashboardAdminActivity : AppCompatActivity() {
 //        init firebase auth
         firebaseAuth = FirebaseAuth.getInstance()
         checkUser()
-        loadCategories()
-        searchEt = findViewById<EditText>(R.id.searchEt)
-        searchEt.addTextChangedListener(object: TextWatcher{
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//        Chuyen lan
+        binding.categoryCard.setOnClickListener{
+            startActivity(Intent(this,ManageCategoryAdmin::class.java))
+        }
 
-            }
+        binding.bookCard.setOnClickListener {
+            startActivity(Intent(this,ManageBook::class.java))
+        }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                try {
-                    adapterCategory.filter.filter(s)
-                }
-                catch (e: Exception)
-                {
-
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-        })
 //        handle click logout
         binding.logoutBtn.setOnClickListener {
             firebaseAuth.signOut()
             checkUser()
         }
-//        handle click start add category page
-        val addCategoryBtn = findViewById<Button>(R.id.addCategoryBtn)
-        addCategoryBtn.setOnClickListener {
-            startActivity(Intent(this,CategoryAddActivity::class.java))
 
-        }
     }
 
-    private fun loadCategories() {
-        categoryArrayList = ArrayList()
-
-        val ref = FirebaseDatabase.getInstance().getReference("Categories")
-        ref.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                // Clear list
-                categoryArrayList.clear()
-                for (ds in snapshot.children){
-                    val model = ds.getValue(fireBase_Category::class.java)
-
-                    categoryArrayList.add(model!!)
-                }
-                adapterCategory = AdminCategoryAdapter(this@DashboardAdminActivity,categoryArrayList)
-                val recyclerView_Cate_admin = findViewById<RecyclerView>(R.id.recyclerView_Cate_admin)
-                recyclerView_Cate_admin.adapter = adapterCategory
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
 
     private fun checkUser() {
         val firebaseUser = firebaseAuth.currentUser

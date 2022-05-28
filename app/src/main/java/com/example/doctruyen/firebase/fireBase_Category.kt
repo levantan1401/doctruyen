@@ -8,7 +8,7 @@ class fireBase_Category {
 
     constructor()
 
-    constructor(id: String, category: String, timestamp: Long, uid: String) {
+    constructor(id: String,  category: String, timestamp: Long, uid: String) {
         this.id = id
         this.category = category
         this.timestamp = timestamp
@@ -17,3 +17,7 @@ class fireBase_Category {
 
 
 }
+data class Test(    var id:String?=null,
+                    var category:String?=null,
+                    var timestamp:Long?=null,
+                    var uid:String?=null)

@@ -1,4 +1,4 @@
 package com.example.doctruyen.Model
 
-class AuthorData(val nameAuthor: String,val imgAuthor: Int, val totalBook: Int, val views: Int, val descAuthor: String) {
+data class AuthorData(val nameAuthor: String? = null,val imgAuthor: String? = null, val totalBook: String? = null, val views: String? = null, val descAuthor: String? = null) {
 }

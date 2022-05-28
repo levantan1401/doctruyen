@@ -25,9 +25,6 @@ class HomePage : AppCompatActivity() {
         replaceFragment(homePageFragment)
 //        initTablayoutHomepage()
         navigation_bottom()
-
-
-
     }
 
     private fun navigation_bottom() {
@@ -44,20 +41,7 @@ class HomePage : AppCompatActivity() {
         }
     }
 
-//    private fun initTablayoutHomepage() {
-//        val viewpager = findViewById<ViewPager>(R.id.viewpager)
-//        val tablayout = findViewById<TabLayout>(R.id.tablayout)
-//
-//        tablayout.setupWithViewPager(viewpager)
-//
-//        val tabLayoutAdapter = TablayoutAdapter(supportFragmentManager)
-//        tabLayoutAdapter.addFragment(BestSellerFragment(),"hihi")
-//        tabLayoutAdapter.addFragment(TheLatestFragment(),"The Latest")
-//        tabLayoutAdapter.addFragment(FavouricFragment(),"Favouric")
-//        tabLayoutAdapter.addFragment(ComingSoonFragment(),"Coming Soon")
-//
-//        viewpager.adapter = tabLayoutAdapter
-//    }
+
 
     private fun replaceFragment(fragment: Fragment) {
         if(true)  // fragment != null

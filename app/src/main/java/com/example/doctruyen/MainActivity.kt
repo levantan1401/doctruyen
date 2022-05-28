@@ -7,6 +7,7 @@ import com.example.doctruyen.UserInterface.HomePage
 import com.example.doctruyen.databinding.ActivityMainBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+//MAIN _ LE VAN TAN _ NGUYEN VAN DUNG
 
 class MainActivity : AppCompatActivity() {
 //      view binding

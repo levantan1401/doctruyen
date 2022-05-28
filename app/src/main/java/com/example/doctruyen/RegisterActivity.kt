@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import com.example.doctruyen.databinding.ActivityRegisterBinding
+import com.example.doctruyen.fragments.HomePageFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.util.regex.Pattern
@@ -124,7 +125,7 @@ class RegisterActivity : AppCompatActivity() {
 // user info saved open user dashboard
                 progressDialog.dismiss()
                 Toast.makeText(this,"Account created... ", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@RegisterActivity,DashboardUserActivity::class.java))
+                startActivity(Intent(this@RegisterActivity,HomePageFragment::class.java))
             }
             .addOnFailureListener {e->
 //                failed adding data to db

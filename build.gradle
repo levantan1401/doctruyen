@@ -2,6 +2,7 @@ buildscript {
     repositories {
         mavenCentral()
         google()
+        gradlePluginPortal()
     }
     ext.kotlin_version = "1.5.21"
     dependencies {
