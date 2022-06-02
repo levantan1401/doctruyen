@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:background="@drawable/card_bg">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/box1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_author_lib"
+            android:layout_width="57dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:src="@drawable/mail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_author_lib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Lê Văn Tấn"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/img_author_lib"
+            app:layout_constraintTop_toTopOf="@+id/img_author_lib" />
+
+        <TextView
+            android:id="@+id/content_rating"
+            android:layout_width="252dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:maxLength="40"
+            android:text="Day la mot cuon sach kha oki"
+            android:textColor="@color/gray"
+            app:layout_constraintStart_toEndOf="@+id/img_author_lib"
+            app:layout_constraintTop_toBottomOf="@+id/name_author_lib" />
+
+        <TextView
+            android:id="@+id/time_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="5dp"
+            android:text="30/05/2022"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/name_author_lib"
+            app:layout_constraintStart_toEndOf="@+id/name_author_lib"
+            app:layout_constraintTop_toTopOf="@+id/name_author_lib" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

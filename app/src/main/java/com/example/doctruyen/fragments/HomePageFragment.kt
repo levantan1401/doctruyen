@@ -7,21 +7,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.doctruyen.Adapter.*
-import com.example.doctruyen.Model.AuthorData
-import com.example.doctruyen.Model.BookData
-import com.example.doctruyen.Model.CategoryData
+import com.example.doctruyen.Model.BookDataTest
 import com.example.doctruyen.R
 import com.example.doctruyen.ReadBook
 import com.example.doctruyen.service.FirebaseService
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 
 class HomePageFragment : Fragment() {
+
+    private var firebaseService = FirebaseService()
     private lateinit var mviewpager: ViewPager
     private lateinit var mtablayout: TabLayout
     private lateinit var cateRW : RecyclerView
@@ -30,10 +34,10 @@ class HomePageFragment : Fragment() {
     private lateinit var bookAdapter: TopTrendAdapter
     private lateinit var authorAdapter:AuthorAdapter
     private lateinit var topAuthorRW: RecyclerView
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    private val gson = Gson()
+//    private lateinit var firebaseDatabase: FirebaseDatabase
+    var onItemSearchClick: ((List<BookDataTest>,value: String) -> Unit)? = null
+    private var listBookSearchResult: BookDataTest? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,16 +47,39 @@ class HomePageFragment : Fragment() {
         insertDataMyBooks(view)
         insertDataTopTrending(view)
         insertDataAuthor(view)
-
         tabLayoutHome(view)
+        val search_view = view.findViewById<SearchView>(R.id.search_view)
+        search_view.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                val value: String = query
+                search(value)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+
+        })
         return view
     }
 
+    private fun search(value: String) {
+
+        if (value != ""){
+            firebaseService.getBookWhere(
+                value,
+                listOf("author","book")
+            ){list->
+                onItemSearchClick?.invoke(list,value)
+            }
+        }
+
+    }
+
+
     private fun insertDataAuthor(view: View) {
         topAuthorRW = view.findViewById<RecyclerView>(R.id.topauthor_recycler)
-
-
-        val firebaseService = FirebaseService()
         firebaseService.getAuthorData {listAuthor->
             authorAdapter = AuthorAdapter(requireContext(), listAuthor)
             topAuthorRW.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false)
@@ -69,8 +96,6 @@ class HomePageFragment : Fragment() {
 
     private fun insertDataMyBooks(view: View) {
         cateRW = view.findViewById<RecyclerView>(R.id.category_recycler)
-
-        val firebaseService = FirebaseService()
         firebaseService.getBook {listBook->
             myBookAdapter = MyBookAdapter(requireContext(), listBook)
             cateRW.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false)
@@ -90,8 +115,6 @@ class HomePageFragment : Fragment() {
 
     private fun insertDataTopTrending(view: View) {
         topTrendRW = view.findViewById<RecyclerView>(R.id.toptrend_recycler)
-
-        val firebaseService = FirebaseService()
         firebaseService.getBook {listBook->
             bookAdapter = TopTrendAdapter(requireContext(), listBook)
             topTrendRW.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL,false)

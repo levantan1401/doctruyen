@@ -13,13 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:background="@drawable/shape_toolbar01">
+
         <ImageView
             android:id="@+id/iconTv"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/logo" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

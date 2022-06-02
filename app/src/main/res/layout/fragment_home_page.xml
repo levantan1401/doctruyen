@@ -47,25 +47,24 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/profile" />
 
-                <EditText
-                    android:id="@+id/editTextTextPersonName"
+                <SearchView
+                    android:id="@+id/search_view"
                     android:layout_width="320dp"
                     android:layout_height="41dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/border"
-                    android:drawableLeft="@drawable/ic_baseline_search_24"
                     android:drawablePadding="16dp"
                     android:ems="10"
-                    android:hint="Find book or author"
+                    android:queryHint="Find book or author"
                     android:inputType="textPersonName"
-                    android:paddingStart="16dp"
-                    android:textColor="@color/gray01"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

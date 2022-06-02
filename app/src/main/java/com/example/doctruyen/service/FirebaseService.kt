@@ -1,7 +1,9 @@
 package com.example.doctruyen.service
 
+import android.media.Rating
 import android.util.Log
 import com.example.doctruyen.Model.AuthorData
+import com.example.doctruyen.Model.BookData
 import com.example.doctruyen.Model.BookDataTest
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -19,10 +21,11 @@ class FirebaseService {
             var arrayBookDataTest = ArrayList<BookDataTest>()
             for (document in result) {
                 var bookTest = document.toObject(BookDataTest::class.java)
+                bookTest.id = document.id
+                Log.i("test","${bookTest}")
                 arrayBookDataTest.add(bookTest)
             }
             callback.invoke(arrayBookDataTest)
-//            callback.invoke(arrayListStopPointInfo)
         }.addOnFailureListener {
             Log.i("test","$it")
         }
@@ -63,6 +66,29 @@ class FirebaseService {
 //            callback.invoke(arrayListStopPointInfo)
         }.addOnFailureListener {
             Log.i("test","$it")
+        }
+    }
+    fun insertRatingBook(ratingBook: Rating, callback: (status: Boolean) -> Unit) {
+//        ratingBook.document(userInfo.id.toString()).set(userInfo)
+//            .addOnSuccessListener {
+//                callback.invoke(true)
+//            }.addOnFailureListener {
+//                callback.invoke(false)
+//            }
+    }
+    fun getBookWhere(
+        value: String,
+        arrayField: List<String>,
+        callback: (bookSearchList: List<BookDataTest>) -> Unit
+    ) {
+        tableBooks.whereEqualTo("${arrayField[1]}","$value").startAt().endAt().get().addOnSuccessListener {
+            documents->
+            var arrayBook= ArrayList<BookDataTest>()
+            for(document in documents){
+                var book = document.toObject(BookDataTest::class.java)
+                arrayBook.add(book)
+            }
+            callback.invoke(arrayBook)
         }
     }
 }

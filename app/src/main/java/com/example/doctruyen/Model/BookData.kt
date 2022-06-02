@@ -9,10 +9,11 @@ data class BookData(
 }
 
 data class BookDataTest(
+    var id:String?=null,
     val author: String? = null,
     val book: String? = null,
     val desc: String? = null,
     val nd: String? = null,
-    val img:String?=null
+    val img:String?=null,
 ) {
 }

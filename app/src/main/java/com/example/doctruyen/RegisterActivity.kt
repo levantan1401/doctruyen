@@ -110,12 +110,12 @@ class RegisterActivity : AppCompatActivity() {
         val timestamp = System.currentTimeMillis()
         val uid = firebaseAuth.uid
         val hashMap: HashMap<String,Any?> = HashMap()
-        hashMap["uid"] = uid
-        hashMap["email"] = email
-        hashMap["name"] = name
+        hashMap["uid"] = "$uid"
+        hashMap["email"] = "$email"
+        hashMap["name"] = "$name"
         hashMap["profileImage"] = "" //add empty will do in profile edit
-        hashMap["userType"] = ""     // prossible are user/admin ,will change value to admin manually on firebase db
-        hashMap["timestamp"] = timestamp
+        hashMap["userType"] = "user"     // prossible are user/admin ,will change value to admin manually on firebase db
+        hashMap["timestamp"] = "$timestamp"
 
 //        set data to db
         val ref = FirebaseDatabase.getInstance().getReference("Users")

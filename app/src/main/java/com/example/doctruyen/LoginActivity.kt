@@ -1,30 +1,39 @@
 package com.example.doctruyen
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
+import com.example.doctruyen.Model.User
 import com.example.doctruyen.UserInterface.HomePage
 import com.example.doctruyen.databinding.ActivityLoginBinding
 import com.example.doctruyen.databinding.ActivityRegisterBinding
 import com.example.doctruyen.fragments.HomePageFragment
+import com.example.doctruyen.service.FirebaseRealTime
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
-//    viewbinding
-    private lateinit var  binding: ActivityLoginBinding
+    //    viewbinding
+    private lateinit var binding: ActivityLoginBinding
+
     //    firebase auth
-    private  lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
+
     //    progress dialog
     private lateinit var progressDialog: ProgressDialog
+
+    private var firebaseRealTime = FirebaseRealTime()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
         // handle click not have account goto register screen
         binding.noAccountTv.setOnClickListener {
-            startActivity(Intent(this,RegisterActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
         binding.loginBtn.setOnClickListener {
 //            step 1 input data 2 validate data 3 login firebase auth 4 check user -firebase auth
@@ -50,10 +59,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.forgotTV.setOnClickListener {
-            startActivity(Intent(this,ForgotpasswordActivity::class.java))
+            startActivity(Intent(this, ForgotpasswordActivity::class.java))
         }
 
     }
+
     private var password = ""
     private var email = ""
     private fun validateData() {
@@ -62,13 +72,13 @@ class LoginActivity : AppCompatActivity() {
         password = binding.passwordEt.text.toString().trim()
 
 //        validate data
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast.makeText(this,"Invalid email format ... ", Toast.LENGTH_SHORT).show()
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Invalid email format ... ", Toast.LENGTH_SHORT).show()
 
-        } else if(password.isEmpty()){
-            Toast.makeText(this,"Enter password... ", Toast.LENGTH_SHORT).show()
-        }
-        else{
+        } else if (password.isEmpty()) {
+            Toast.makeText(this, "Enter password... ", Toast.LENGTH_SHORT).show()
+        } else {
+
             loginUser()
         }
     }
@@ -83,42 +93,57 @@ class LoginActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 checkUser()
             }
-            .addOnFailureListener { e->
+            .addOnFailureListener { e ->
 //                failed login
                 progressDialog.dismiss()
-                Toast.makeText(this,"login Failed due to ${e.message}",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "login Failed due to ${e.message}", Toast.LENGTH_SHORT).show()
 
             }
     }
-//    4 check user -firebase auth
+
+    //    4 check user -firebase auth
     //            if user move to user dashboard
 //            if admin move  to admin dashboard
     private fun checkUser() {
-        progressDialog.setMessage("checking user ...")
-    val  firebaseUser = firebaseAuth.currentUser!!
-    val ref =FirebaseDatabase.getInstance().getReference("Users")
-    ref.child(firebaseUser.uid)
-        .addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                progressDialog.dismiss()
-//                get user type user/admin
-                var userType = snapshot.child("userType").value
-                if (userType == "user"){
-                //its simple user open user dashboard
-                    startActivity(Intent(this@LoginActivity,HomePage::class.java))
-                    finish()
-                } else if ( userType == "admin" ){
-    //                its admin open admin dashboard
-                    startActivity(Intent(this@LoginActivity,DashboardAdminActivity::class.java))
-                    finish()
+        firebaseRealTime.getUser("${firebaseAuth.uid}") { user ->
+            insertSharedPreferences(user)
+            startActivity(Intent(this@LoginActivity,HomePage::class.java))
+            finish()
+        }
+//        progressDialog.setMessage("checking user ...")
+//    val  firebaseUser = firebaseAuth.currentUser!!
+//    val ref =FirebaseDatabase.getInstance().getReference("Users")
+//    ref.child(firebaseUser.uid)
+//        .addListenerForSingleValueEvent(object : ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                progressDialog.dismiss()
+////                get user type user/admin
+//                var userType = snapshot.child("userType").value
+//                if (userType == "user"){
+//                //its simple user open user dashboard
+//                    startActivity(Intent(this@LoginActivity,HomePage::class.java))
+//                    finish()
+//                } else if ( userType == "admin" ){
+//    //                its admin open admin dashboard
+//                    startActivity(Intent(this@LoginActivity,DashboardAdminActivity::class.java))
+//                    finish()
+//
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//
+//        })
+    }
 
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
+    private fun insertSharedPreferences(userInfo: User) {
+        val pref = applicationContext.getSharedPreferences("PrefName", Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        val gson = Gson()
+        var json = gson.toJson(userInfo)
+        editor.putString("USERINFO", json)
+        editor.commit()
     }
 }

@@ -165,8 +165,8 @@
             android:id="@+id/reading"
             android:layout_width="131dp"
             android:layout_height="36dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/border_circle"
             android:drawableLeft="@drawable/ic_baseline_menu_book"
             android:text="Read Now"
@@ -180,13 +180,13 @@
             android:id="@+id/btndownload"
             android:layout_width="142dp"
             android:layout_height="36dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/border_circle"
             android:drawableLeft="@drawable/ic_download"
             android:text="Download"
             android:textSize="12sp"
             app:backgroundTint="@color/yello"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/reading"
             app:layout_constraintTop_toBottomOf="@+id/textView16"
             tools:ignore="MissingConstraints" />
@@ -218,6 +218,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textnd" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_rating"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -236,5 +237,20 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView22"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView22" />
+
+        <ImageButton
+            android:id="@+id/imgbtn_comment"
+            android:layout_width="45dp"
+            android:layout_height="38dp"
+            android:background="@drawable/border_circle"
+            android:backgroundTint="#03A9F4"
+            app:layout_constraintBottom_toBottomOf="@+id/btndownload"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.527"
+            app:layout_constraintStart_toEndOf="@+id/btndownload"
+            app:layout_constraintTop_toTopOf="@+id/btndownload"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_chat_outline_white" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
